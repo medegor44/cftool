@@ -27,7 +27,12 @@ def html_print(problems, file):
     file.write("</html>")
 
 
-tags = set(sys.argv[1:])
+t = sys.argv[1:]
+
+for i in range(len(t)):
+    t[i] = t[i].replace('_', ' ')
+
+tags = set(t)
 
 try:
     response = rq.get('http://codeforces.com/api/problemset.problems?locale=ru').json()
