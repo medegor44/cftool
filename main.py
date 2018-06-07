@@ -11,7 +11,10 @@ def html_print(problems, file):
     file.write("<!DOCTYPE html>")
     file.write("<html>\n")
     file.write("  <head>\n")
-    file.write("    <meta charset=\"utf-8\">")
+    if not os.name == "nt":
+        file.write("    <meta charset=\"utf-8\">")
+    else:
+        file.write("    <meta charset=\"windows-1251\">")
     file.write("  </head>\n")
 
     file.write("  <table border='1'>\n")
