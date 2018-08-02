@@ -5,7 +5,6 @@ import json
 import os
 from problem import Problem, Verdict
 
-
 # prints list of problems into simple html table
 def html_print(problems, file):
     file.write("<!DOCTYPE html>")
@@ -85,10 +84,38 @@ def check_solved(lang, user, problems):
             problem.verdict = verdicts[id]
 
 
+def setup():
+    print('Enter your cf handle')
+    handle = input()
+    print('Select language (en/ru)')
+    lang = input()
+
+    if str.lower(lang) not in ('ru', 'en'):
+        lang = 'en'
+
+    json.dump({'lang' : lang, 'user' : handle}, open('settings.json', 'w'))
+
+
+def read_settings():
+    try:
+        file = open('settings.json', 'r')
+        settings = json.load(file)
+
+        return {'user' : settings['user'], 'lang' : settings['lang']}
+    except IOError:
+        return {'user' : 'N/A', 'lang' : 'en'}
+
+
 try:
-    user = sys.argv[1]
-    lang = 'ru'
-    t = sys.argv[2:]
+    if '-s' in sys.argv:
+        setup()
+        exit(0)
+
+    info = read_settings()
+    user = info['user']
+    lang = info['lang']
+
+    t = sys.argv[1:]
 
     for i in range(len(t)):
         t[i] = t[i].replace('_', ' ')
@@ -103,6 +130,8 @@ try:
     html_print(problems, open("index.html", "w"))
     webbrowser.open("file://" + os.path.realpath("index.html"))
 
+except KeyError:
+    print("Please, check your cf handle or use '-s' to setup cftool")
 except IOError:
     print("Can't connect to Codeforces. Wait a bit or check your Internet connection.")
 except json.JSONDecodeError:
