@@ -6,11 +6,11 @@ Cftool -- программа для создания тематической в
 которые следует выбрать с сайта. Первым в списке параметров указывается хендл на 
 Codeforces, затем список тегов задач. Например:
 
-    python3 main.py strings hashing
+    $ python3 main.py strings hashing
 
 Чтобы настроить свой язык и хендл на Codeforces следует воспользоваться параметром `-s`:
     
-    python3 main.py -s
+    $ python3 main.py -s
 
 # Теги задач 
     *special
